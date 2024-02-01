@@ -121,14 +121,22 @@ function readAccounts() {
     }
 
     if (!account.secret && fs.existsSync(account.id + '.mafile')) {
-      const fileContent = fs.readFileSync(account.id + '.mafile', 'utf-8');
+      const fileContent = fs
+        .readFileSync(account.id + '.mafile', 'utf-8')
+        .trim()
+        .replace(/},\s*}/g, '}}')
+        .replace(/'/, '"');
       const mafile = JSON.parse(fileContent);
 
       if (mafile?.shared_secret) account.secret = mafile.shared_secret;
     }
 
     if (!account.secret && fs.existsSync(account.id + '.maFile')) {
-      const fileContent = fs.readFileSync(account.id + '.maFile', 'utf-8');
+      const fileContent = fs
+        .readFileSync(account.id + '.maFile', 'utf-8')
+        .trim()
+        .replace(/},\s*}/g, '}}')
+        .replace(/'/, '"');
       const mafile = JSON.parse(fileContent);
 
       if (mafile?.shared_secret) account.secret = mafile.shared_secret;
